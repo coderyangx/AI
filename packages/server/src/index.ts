@@ -1,12 +1,19 @@
 // apps/server/src/index.ts
 import express from 'express';
 import cors from 'cors';
+import OpenAI from 'openai';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
+console.log('环境变量', process.env.OPENAI_API_KEY);
+
 const app = express();
 const port = process.env.PORT || 8000;
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 // 中间件
 app.use(
@@ -17,17 +24,39 @@ app.use(
       'http://localhost:8000', // <-- 为 Vite 添加
     ],
   })
-); // 允许前端访问
-app.use(express.json());
-
-// --- 在这里引入共享类型 ---
-// import type { AgentResponse } from '@my-ai-agent/types';
+);
+app.use(express.json()); // 解析请求体中的json数据
 
 app.get('/', (req, res) => {
   res.send('Hello From AI Agent Backend (Node.js)');
 });
 
-app.post('/api/v1/agent/invoke', (req, res) => {
+app.post('/api/agent/chat', async (req, res) => {
+  try {
+    const { message } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ error: 'Message is required' });
+    }
+
+    // 调用 OpenAI API
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo', // 使用性价比高的模型
+      messages: [{ role: 'user', content: message }],
+    });
+
+    // AI 回复
+    const aiResponse = completion.choices[0].message.content;
+
+    // 响应前端
+    res.status(200).json({ reply: aiResponse });
+  } catch (error) {
+    console.error('Error calling OpenAI API:', error);
+    res.status(500).json({ error: 'AI 服务出错了' });
+  }
+});
+
+app.post('/api/agent/invoke', (req, res) => {
   const { prompt } = req.body;
 
   if (!prompt) {
@@ -46,5 +75,5 @@ app.post('/api/v1/agent/invoke', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`[后端服务]: Server is running at http://localhost:${port}`);
+  console.log(`✅[后端服务]: is running at http://localhost:${port}`);
 });
