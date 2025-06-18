@@ -1,0 +1,21 @@
+{
+  "name": "my-ai-agent-monorepo-node",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "yarn@1.22.22",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "repository": "https://github.com/coderyangx/AI.git",
+  "author": "coderyangx <993794142@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.4"
+  }
+}
