@@ -1,0 +1,76 @@
+.app-container {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 60vw;
+  height: 60vh;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-window {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.message {
+  max-width: 80%;
+  padding: 10px 15px;
+  border-radius: 18px;
+  word-wrap: break-word;
+}
+
+.message.user {
+  background-color: #0084ff;
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.message.assistant {
+  background-color: #e4e6eb;
+  color: #050505;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.input-form {
+  display: flex;
+  padding: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.input-form input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.input-form button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #0084ff;
+  color: white;
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.input-form button:hover {
+  background-color: #006bcf;
+}
+
+.input-form button:disabled {
+  background-color: #a0c4e4;
+  cursor: not-allowed;
+}

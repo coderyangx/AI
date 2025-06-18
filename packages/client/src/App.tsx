@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import ChatWindow from './pages/ChatWindow';
 import './App.css';
 
 // 引入共享类型！
@@ -43,8 +42,10 @@ function App() {
 
   return (
     <>
-      <h1>Client</h1>
-      <form onSubmit={handleSubmit}>
+      <h4>Client</h4>
+      <ChatWindow />
+
+      <form style={{ padding: 10 }} onSubmit={handleSubmit}>
         <input
           type='text'
           value={prompt}
