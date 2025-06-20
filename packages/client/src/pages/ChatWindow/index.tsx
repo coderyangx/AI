@@ -9,7 +9,7 @@ function Chat() {
   const [isLoading, setIsLoading] = useState(false); // 是否正在等待AI响应
 
   // 处理消息发送
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormDataEvent) => {
     e.preventDefault(); // 阻止表单默认提交行为
     if (!input.trim() || isLoading) return; // 输入为空或正在加载时，直接返回
 
@@ -19,19 +19,19 @@ function Chat() {
     setInput('');
 
     try {
-      // 调用后端 API
+      // 调用 API
       const response = await axios.post('http://localhost:3001/api/chat', {
         message: input,
       });
 
       const aiMessage = { role: 'assistant', content: response.data.reply };
-      setMessages((prev) => [...prev, aiMessage]); // 显示 AI 的回复
+      setMessages((prev) => [...prev, aiMessage]); // AI 回复
     } catch (error) {
       console.error('Error fetching AI reply:', error);
       const errorMessage = { role: 'assistant', content: '抱歉，我暂时无法回答。' };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
-      setIsLoading(false); // 加载结束
+      setIsLoading(false);
     }
   };
 
