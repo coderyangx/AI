@@ -2,14 +2,16 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
-import { z } from 'zod';
+import { custom, z } from 'zod';
 import { createOpenAI } from '@ai-sdk/openai';
 import { streamText, generateObject, generateText } from 'ai';
 import dotenv from 'dotenv';
+import { logger } from './lib/log';
+import path from 'path';
 
 dotenv.config();
 
-// console.log('环境变量', process.env.OPENAI_API_KEY);
+// console.log('环境变量', process.env.OPENAI_API_KEY, process.env.NODE_ENV);
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -33,6 +35,38 @@ app.use(
 );
 app.use(express.json()); // 解析请求体中的json数据
 
+// 日志中间件
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   const start = Date.now();
+//   const requestId = req.headers['x-request-id'] || `req-${Date.now()}`;
+
+//   logger.info({
+//     type: 'request',
+//     method: req.method,
+//     path: req.path,
+//     requestId,
+//     query: req.query,
+//     body: req.method !== 'GET' ? req.body : undefined,
+//     userAgent: req.headers['user-agent'],
+//     ip: req.ip,
+//   });
+
+//   // 拦截响应以记录
+//   const originalSend = res.send;
+//   res.send = function (body) {
+//     const responseTime = Date.now() - start;
+//     logger.info({
+//       type: 'response',
+//       requestId,
+//       statusCode: res.statusCode,
+//       responseTime,
+//       contentLength: body ? body.length : 0,
+//     });
+//     return originalSend.call(this, body);
+//   };
+//   next();
+// });
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello From AI Agent Backend (Node.js)');
 });
@@ -41,10 +75,10 @@ app.get('/', (req: Request, res: Response) => {
 app.post('/api/agent/chat', async (req: Request, res: Response) => {
   try {
     const { message } = req.body;
-    const cookies = req.headers['Cookie'];
-    console.log('cookies: ', cookies);
+    const cookies = req.headers.cookie;
 
     if (!message) {
+      logger.warn('客户端发送了空消息');
       return res.status(400).json({ error: 'Message is required' });
     }
 
@@ -79,20 +113,39 @@ app.post('/api/agent/chat', async (req: Request, res: Response) => {
 
     // AI 回复
     const aiResponse = completion.choices[0].message.content;
+
+    logger.info({
+      type: 'llm-response',
+      model: 'gpt-4o-mini',
+      responseLength: aiResponse?.length || 0,
+      firstWords: aiResponse?.substring(0, 20),
+    });
+
     // 响应前端
     res.status(200).json({ message: aiResponse });
   } catch (error) {
-    console.error('Error calling OpenAI API:', error);
+    const errorMessage = error instanceof Error ? error.message : '未知错误';
+    logger.error({
+      type: 'llm-error',
+      error: errorMessage,
+      stack: error instanceof Error ? error.stack : undefined,
+    });
     res.status(500).json({ error: 'AI 服务出错了' });
   }
 });
 
 // 流式输出接口
 app.post('/api/agent/stream', async (req: Request, res: Response) => {
+  const requestId = `stream-${Date.now()}`;
   try {
     const { message } = req.body;
 
     if (!message) {
+      logger.warn({
+        type: 'stream-error',
+        requestId,
+        error: '客户端发送了空消息',
+      });
       return res.status(400).json({ error: '消息内容不能为空' });
     }
 
@@ -108,21 +161,30 @@ app.post('/api/agent/stream', async (req: Request, res: Response) => {
       stream: true,
     });
 
+    let fullResponse = '';
+
     // 处理响应
     for await (const chunk of stream) {
       const content = chunk.choices[0]?.delta?.content || '';
       console.log('大模型输出: ', content);
       if (content) {
+        fullResponse += content;
         // 发送数据
         res.write(`data: ${JSON.stringify({ content })}\n\n`);
       }
     }
 
+    logger.info({
+      type: 'stream-complete',
+      requestId,
+      responseLength: fullResponse.length,
+      firstWords: fullResponse.substring(0, 20),
+    });
+
     // 结束流
     res.write('data: [DONE]\n\n');
     res.end();
   } catch (error) {
-    console.error('流式输出错误:', error);
     // 如果连接仍然打开，发送错误消息
     if (!res.headersSent) {
       res.status(500).json({ error: 'AI 服务出错了' });
@@ -135,23 +197,48 @@ app.post('/api/agent/stream', async (req: Request, res: Response) => {
 
 // 测试接口
 app.post('/api/agent/test', (req: Request, res: Response) => {
-  const { prompt } = req.body;
-
-  if (!prompt) {
-    return res.status(400).json({ error: 'Prompt is required' });
+  const { message } = req.body;
+  if (!message) {
+    logger.warn('测试接口收到空消息');
+    return res.status(400).json({ error: 'Message is required' });
   }
 
-  console.log(`Received prompt: ${prompt}`);
-  // 这里是未来调用你的 AI Agent 逻辑的地方
+  logger.info({
+    type: 'test-request',
+    message,
+    time: req.headers['x-time'],
+    timestamp: req.headers['x-timestamp'],
+    custom: {
+      origin: req.headers.origin,
+    },
+  });
   // const agentResponse = await myAgent.run(prompt);
-
-  const responseText = `I am a Node.js AI agent. You said: '${prompt}'`;
-
-  // const response: AgentResponse = { response: responseText };
-  // res.json(response);
+  const responseText = `I am a Node.js AI agent. You said: '${message}'`;
   res.json({ response: responseText });
 });
 
+// 错误处理中间件
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  logger.error({
+    type: 'server-error',
+    message: err.message,
+    stack: err.stack,
+    path: req.path,
+    method: req.method,
+  });
+
+  res.status(500).json({
+    error: '服务器内部错误',
+  });
+});
+
 app.listen(port, () => {
+  logger.info({
+    type: 'server-start',
+    message: `服务器启动成功，运行在 http://localhost:${port}`,
+    port,
+    environment: process.env.NODE_ENV || 'development',
+  });
+
   console.log(`✅[后端服务]: is running at http://localhost:${port}`);
 });

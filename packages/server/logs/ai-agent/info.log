@@ -1,0 +1,42 @@
+{"app":"ai-agent","level":"info","message":"/api/agent/test: message is 哇哇"}
+{"app":"ai-agent","level":"error","message":"message is required"}
+{"app":"ai-agent","level":"info","message":"/api/agent/test: message is w"}
+{"app":"ai-agent","level":"info","message":"message is required www"}
+{"app":"ai-agent","custom":{"age":18,"name":"test"},"level":"info","message":"wwww","time":"2025/6/23 17:43:22","timestamp":1750671802939}
+{"app":"ai-agent","custom":{},"level":"info","message":"测试接口记录日志","time":"2025/6/23 17:44:27","timestamp":1750671867706}
+{"app":"ai-agent","custom":{},"level":"info","message":"测试传入时间","time":"2025/6/23 17:46:06","timestamp":1750671966352}
+{"app":"ai-agent","custom":{},"level":"info","message":"呃呃","time":"2025/6/23 17:47:40","timestamp":1750672060764}
+{"app":"ai-agent","custom":{},"level":"info","message":"22","time":"2025/6/23 17:48:28","timestamp":1750672108103}
+{"app":"ai-agent","custom":{},"level":"info","message":"11","time":"2025/6/23 17:49:29","timestamp":1750672169418}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"2","time":"2025/6/23 17:50:06","timestamp":"1750672206706"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","level":"info","message":{"body":{"message":"呃呃"},"ip":"::1","method":"POST","path":"/api/agent/test","query":{},"requestId":"req-1750672486327","type":"request","userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"呃呃","time":"2025/6/23 17:54:46","timestamp":"1750672486162","type":"test-request"}
+{"app":"ai-agent","level":"info","message":{"contentLength":54,"requestId":"req-1750672486327","responseTime":6,"statusCode":200,"type":"response"}}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","level":"info","message":{"body":{"message":"eeeee"},"ip":"::1","method":"POST","path":"/api/agent/test","query":{},"requestId":"req-1750672845967","type":"request","userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"}}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"eeeee","time":"2025/6/23 18:00:45","timestamp":"1750672845890","type":"test-request"}
+{"app":"ai-agent","level":"info","message":{"contentLength":57,"requestId":"req-1750672845967","responseTime":1,"statusCode":200,"type":"response"}}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}

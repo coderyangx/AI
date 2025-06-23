@@ -1,18 +1,18 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import { Bot, Sun, Moon, SunMoon, Zap } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { MessageBubble } from "./message-bubble";
-import { ChatInput } from "./chat-input";
-import { Button } from "./button";
-import { Switch } from "./switch";
-import { Label } from "./label";
-import { useTheme } from "@/utils/theme";
-import { getCookie } from "@/config";
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { Bot, Sun, Moon, SunMoon, Zap } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { MessageBubble } from './message-bubble';
+import { ChatInput } from './chat-input';
+import { Button } from './button';
+import { Switch } from './switch';
+import { Label } from './label';
+import { useTheme } from '@/utils/theme';
+import { getCookie } from '@/config';
 
 interface Message {
   id: string;
   content: string;
-  role: "user" | "assistant" | "system" | "tool";
+  role: 'user' | 'assistant' | 'system' | 'tool';
   timestamp: string;
 }
 
@@ -20,11 +20,11 @@ const cookie = getCookie();
 
 export default function ChatContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const { theme, toggleTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [isStreamMode, setIsStreamMode] = useState(false);
-  const [streamContent, setStreamContent] = useState("");
+  const [streamContent, setStreamContent] = useState('');
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const shouldScrollRef = useRef(true);
@@ -34,7 +34,7 @@ export default function ChatContainer() {
     if (!shouldScrollRef.current) return;
 
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, []);
 
@@ -54,11 +54,11 @@ export default function ChatContainer() {
       shouldScrollRef.current = isNearBottom;
     };
     if (scrollArea) {
-      scrollArea.addEventListener("scroll", handleScroll);
+      scrollArea.addEventListener('scroll', handleScroll);
     }
     return () => {
       if (scrollArea) {
-        scrollArea.removeEventListener("scroll", handleScroll);
+        scrollArea.removeEventListener('scroll', handleScroll);
       }
     };
   }, []);
@@ -69,14 +69,14 @@ export default function ChatContainer() {
     const userMessage: Message = {
       id: Date.now().toString(),
       content: input.trim(),
-      role: "user",
+      role: 'user',
       timestamp: new Date().toLocaleTimeString(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+    setInput('');
     setIsLoading(true);
-    setStreamContent("");
+    setStreamContent('');
     // 强制滚动到底部
     shouldScrollRef.current = true;
 
@@ -93,37 +93,37 @@ export default function ChatContainer() {
   const handleNormalMode = async (content: string) => {
     try {
       // 调用AI /api/agent/chat
-      const response = await fetch("http://localhost:8000/api/agent/test", {
-        method: "POST",
+      const response = await fetch('http://localhost:8000/api/agent/test', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          "X-Env": "test",
-          "X-Form-View": "test",
+          'Content-Type': 'application/json',
+          'X-Time': new Date().toLocaleString(),
+          'X-Timestamp': new Date().getTime(),
           Cookie: cookie,
         },
         body: JSON.stringify({ message: content }),
       });
 
       if (!response.ok) {
-        throw new Error("网络请求失败");
+        throw new Error('网络请求失败');
       }
 
       const data = await response.json();
-      const aiResponse = data.message || data.reply || data.response || "";
+      const aiResponse = data.message || data.reply || data.response || '';
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: aiResponse,
-        role: "assistant",
+        role: 'assistant',
         timestamp: new Date().toLocaleTimeString(),
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: "抱歉，发生了一些错误。请稍后再试。",
-        role: "system",
+        content: '抱歉，发生了一些错误。请稍后再试。',
+        role: 'system',
         timestamp: new Date().toLocaleTimeString(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -144,51 +144,51 @@ export default function ChatContainer() {
         ...prev,
         {
           id: placeholderId,
-          content: "",
-          role: "assistant",
+          content: '',
+          role: 'assistant',
           timestamp,
         },
       ]);
 
       // 调用流式API
       // fetch 可以直接返回流式数据
-      const response = await fetch("http://localhost:8000/api/agent/stream", {
-        method: "POST",
+      const response = await fetch('http://localhost:8000/api/agent/stream', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          "X-Env": "test",
-          "X-Form-View": "test",
+          'Content-Type': 'application/json',
+          'X-Time': new Date().toLocaleString(),
+          'X-Timestamp': new Date().getTime().toString(),
           Cookie: cookie,
         },
         body: JSON.stringify({ message: content }),
       });
 
       if (!response.ok) {
-        throw new Error("网络请求失败");
+        throw new Error('网络请求失败');
       }
 
       // 基于 fetch 响应体的 getReader 方法，可以读取流式数据
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
-      let accumulatedContent = "";
+      let accumulatedContent = '';
 
       if (!reader) {
-        throw new Error("无法读取响应流");
+        throw new Error('无法读取响应流');
       }
 
       while (true) {
         const { done, value } = await reader.read();
-        console.log("流式数据:", value);
+        console.log('流式数据:', value);
         if (done) break;
         // 解码
         const chunk = decoder.decode(value, { stream: true });
         // 处理SSE格式
-        const lines = chunk.split("\n\n");
+        const lines = chunk.split('\n\n');
 
         for (const line of lines) {
-          if (line.startsWith("data: ")) {
+          if (line.startsWith('data: ')) {
             const data = line.substring(6);
-            if (data === "[DONE]") {
+            if (data === '[DONE]') {
               break;
             }
             try {
@@ -207,7 +207,7 @@ export default function ChatContainer() {
                 );
               }
             } catch (e) {
-              console.error("解析SSE数据失败", e);
+              console.error('解析SSE数据失败', e);
             }
           }
         }
@@ -233,23 +233,23 @@ export default function ChatContainer() {
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: "抱歉，流式输出发生错误。请稍后再试。",
-        role: "system",
+        content: '抱歉，流式输出发生错误。请稍后再试。',
+        role: 'system',
         timestamp: new Date().toLocaleTimeString(),
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
-      setStreamContent("");
+      setStreamContent('');
     }
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-2rem)] max-w-4xl mx-auto bg-card rounded-lg shadow-lg overflow-hidden border">
-      <div className="flex items-center justify-between px-6 py-4 border-b bg-card">
-        <div className="flex items-center space-x-2">
-          <Bot className="h-5 w-5 text-primary" />
-          <h2 className="text-lg font-semibold">AI 助手</h2>
+    <div className='flex flex-col h-[calc(100vh-2rem)] max-w-4xl mx-auto bg-card rounded-lg shadow-lg overflow-hidden border'>
+      <div className='flex items-center justify-between px-6 py-4 border-b bg-card'>
+        <div className='flex items-center space-x-2'>
+          <Bot className='h-5 w-5 text-primary' />
+          <h2 className='text-lg font-semibold'>AI 助手</h2>
           {/* <Button variant='destructive'>测试shadcn</Button>
           <Button variant='outline'>测试shadcn</Button>
           <Button variant='secondary'>测试shadcn</Button>
@@ -257,40 +257,40 @@ export default function ChatContainer() {
           <Button variant='link'>测试shadcn</Button> */}
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className='flex items-center space-x-4'>
           {/* 流式输出模式开关 */}
-          <div className="flex items-center space-x-2">
+          <div className='flex items-center space-x-2'>
             <Switch
-              id="stream-mode"
+              id='stream-mode'
               checked={isStreamMode}
               onCheckedChange={setIsStreamMode}
             />
             <Label
-              htmlFor="stream-mode"
-              className="flex items-center space-x-1"
+              htmlFor='stream-mode'
+              className='flex items-center space-x-1'
             >
-              <Zap className="h-4 w-4" />
+              <Zap className='h-4 w-4' />
               <span>流式输出</span>
             </Label>
           </div>
 
           {/* 主题切换 variant='ghost' */}
           <Button
-            variant="ghost"
+            variant='ghost'
             onClick={toggleTheme}
-            className="rounded-full"
+            className='rounded-full'
           >
-            {theme === "light" ? (
-              <Sun className="h-5 w-5 cursor-pointer" />
+            {theme === 'light' ? (
+              <Sun className='h-5 w-5 cursor-pointer' />
             ) : (
-              <Moon className="h-5 w-5 cursor-pointer" />
+              <Moon className='h-5 w-5 cursor-pointer' />
             )}
           </Button>
         </div>
       </div>
 
-      <ScrollArea className="flex-1 px-4" ref={scrollAreaRef}>
-        <div className="space-y-4 py-4">
+      <ScrollArea className='flex-1 px-4' ref={scrollAreaRef}>
+        <div className='space-y-4 py-4'>
           {messages.map((message) => (
             <MessageBubble
               key={message.id}
@@ -300,14 +300,14 @@ export default function ChatContainer() {
             />
           ))}
           {isLoading && !isStreamMode && (
-            <MessageBubble content="" role="assistant" isLoading={true} />
+            <MessageBubble content='' role='assistant' isLoading={true} />
           )}
           {/* 用于滚动到底部的空元素 */}
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
 
-      <div className="p-4 border-t bg-card">
+      <div className='p-4 border-t bg-card'>
         <ChatInput
           value={input}
           onChange={setInput}
