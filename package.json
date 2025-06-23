@@ -12,6 +12,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "turbo run dev",
+    "dev:client": "cd packages/client && yarn dev",
+    "dev:server": "cd packages/server && yarn dev",
     "build": "turbo run build",
     "lint": "turbo run lint"
   },

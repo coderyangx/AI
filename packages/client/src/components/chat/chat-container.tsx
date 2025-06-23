@@ -13,7 +13,7 @@ interface Message {
   timestamp: string;
 }
 
-export function ChatContainer() {
+export default function ChatContainer() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);

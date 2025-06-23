@@ -1,15 +1,20 @@
-import { useState } from 'react';
+/**
+ * 第一版 ui 已废弃
+ */
+import { useState, type FormEvent } from 'react';
 import axios from 'axios';
 import './index.less';
 
 function Chat() {
   // 状态管理
   const [input, setInput] = useState(''); // 输入框内容
-  const [messages, setMessages] = useState([]); // 对话消息列表
+  const [messages, setMessages] = useState<
+    { role: 'user' | 'assistant' | string; content: string }[]
+  >([]); // 对话消息列表
   const [isLoading, setIsLoading] = useState(false); // 是否正在等待AI响应
 
   // 处理消息发送
-  const handleSubmit = async (e: FormDataEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 阻止表单默认提交行为
     if (!input.trim() || isLoading) return; // 输入为空或正在加载时，直接返回
 
