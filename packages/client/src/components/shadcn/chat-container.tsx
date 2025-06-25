@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Bot, Sun, Moon, SunMoon, Zap } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import SplitText from '@/components/SplitText';
 import { MessageBubble } from './message-bubble';
 import { ChatInput } from './chat-input';
 import { Button } from './button';
@@ -8,6 +9,7 @@ import { Switch } from './switch';
 import { Label } from './label';
 import { useTheme } from '@/utils/theme';
 import { getCookie } from '@/config';
+import { ContentCard } from './content-card';
 
 interface Message {
   id: string;
@@ -249,7 +251,21 @@ export default function ChatContainer() {
       <div className='flex items-center justify-between px-6 py-4 border-b bg-card'>
         <div className='flex items-center space-x-2'>
           <Bot className='h-5 w-5 text-primary' />
-          <h2 className='text-lg font-semibold'>AI 助手</h2>
+          <SplitText
+            text='AI 助手'
+            className='font-semibold text-center'
+            delay={100}
+            duration={0.6}
+            ease='power3.out'
+            splitType='chars'
+            from={{ opacity: 0, y: 40 }}
+            to={{ opacity: 1, y: 0 }}
+            threshold={0.1}
+            rootMargin='-100px'
+            textAlign='center'
+            onLetterAnimationComplete={() => {}}
+          />
+          {/* <h2 className='text-lg font-semibold flex'>AI 助手</h2> */}
           {/* <Button variant='destructive'>测试shadcn</Button>
           <Button variant='outline'>测试shadcn</Button>
           <Button variant='secondary'>测试shadcn</Button>
@@ -290,6 +306,7 @@ export default function ChatContainer() {
       </div>
 
       <ScrollArea className='flex-1 px-4' ref={scrollAreaRef}>
+        <ContentCard />
         <div className='space-y-4 py-4'>
           {messages.map((message) => (
             <MessageBubble

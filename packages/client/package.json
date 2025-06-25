@@ -26,6 +26,7 @@
     "clsx": "^2.1.0",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.18.1",
+    "gsap": "^3.13.0",
     "lucide-react": "^0.518.0",
     "postcss": "^8.4.35",
     "react": "^18.2.0",

@@ -6,7 +6,7 @@ import { custom, z } from 'zod';
 import { createOpenAI } from '@ai-sdk/openai';
 import { streamText, generateObject, generateText } from 'ai';
 import dotenv from 'dotenv';
-import { logger } from './lib/log';
+import { logger } from './utils/log';
 import path from 'path';
 
 dotenv.config();
@@ -15,6 +15,11 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8000;
+
+const openaiSdk = createOpenAI({
+  apiKey: process.env.FRIDAY_API_KEY,
+  baseURL: 'https://aigc.sankuai.com/v1/openai/native/',
+});
 
 const openai = new OpenAI({
   // 修改friday-key
@@ -139,13 +144,7 @@ app.post('/api/agent/stream', async (req: Request, res: Response) => {
   const requestId = `stream-${Date.now()}`;
   try {
     const { message } = req.body;
-
     if (!message) {
-      logger.warn({
-        type: 'stream-error',
-        requestId,
-        error: '客户端发送了空消息',
-      });
       return res.status(400).json({ error: '消息内容不能为空' });
     }
 
@@ -153,35 +152,41 @@ app.post('/api/agent/stream', async (req: Request, res: Response) => {
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
+    /** openai 需要手动处理流式输出 */
+    // const stream = await openai.chat.completions.create({
+    //   model: 'gpt-4o-mini',
+    //   messages: [{ role: 'user', content: message }],
+    //   stream: true,
+    // });
+    // let fullResponse = '';
+    // for await (const chunk of stream) {
+    //   const content = chunk.choices[0]?.delta?.content || '';
+    //   console.log('大模型输出: ', content);
+    //   if (content) {
+    //     fullResponse += content;
+    //     // 发送数据
+    //     res.write(`data: ${JSON.stringify({ content })}\n\n`);
+    //   }
+    // }
 
-    // 创建请求
-    const stream = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [{ role: 'user', content: message }],
-      stream: true,
-    });
-
-    let fullResponse = '';
-
-    // 处理响应
-    for await (const chunk of stream) {
-      const content = chunk.choices[0]?.delta?.content || '';
-      console.log('大模型输出: ', content);
-      if (content) {
-        fullResponse += content;
-        // 发送数据
-        res.write(`data: ${JSON.stringify({ content })}\n\n`);
-      }
-    }
-
-    logger.info({
-      type: 'stream-complete',
-      requestId,
-      responseLength: fullResponse.length,
-      firstWords: fullResponse.substring(0, 20),
-    });
+    // logger.info({
+    //   type: 'stream-complete',
+    //   requestId,
+    //   responseLength: fullResponse.length,
+    //   firstWords: fullResponse.substring(0, 20),
+    // });
 
     // 结束流
+
+    /** 使用 ai-sdk 自动流式 */
+    const result = streamText({
+      model: openaiSdk('gpt-4o-mini'),
+      messages: [{ role: 'user', content: message }],
+    });
+    for await (const textPart of result.textStream) {
+      res.write(`data: ${JSON.stringify({ content: textPart })}\n\n`);
+    }
+
     res.write('data: [DONE]\n\n');
     res.end();
   } catch (error) {
@@ -233,12 +238,11 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(port, () => {
-  logger.info({
-    type: 'server-start',
-    message: `服务器启动成功，运行在 http://localhost:${port}`,
-    port,
-    environment: process.env.NODE_ENV || 'development',
-  });
-
+  // logger.info({
+  //   type: 'server-start',
+  //   message: `服务器启动成功，运行在 http://localhost:${port}`,
+  //   port,
+  //   environment: process.env.NODE_ENV || 'development',
+  // });
   console.log(`✅[后端服务]: is running at http://localhost:${port}`);
 });

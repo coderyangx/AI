@@ -1,5 +1,5 @@
 import { customProvider } from "ai";
-import { createOpenAI } from "@ai-sdk/openai";
+import { createOpenAI, openai } from "@ai-sdk/openai";
 
 const modelNames = [
   "deepseek-chat",

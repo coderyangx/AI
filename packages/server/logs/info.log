@@ -40,3 +40,5 @@
 {"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
 {"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
 {"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"测试控制台日志打印","time":"2025/6/23 19:41:15","timestamp":"1750678875389","type":"test-request"}
+{"app":"ai-agent","level":"info","message":{"firstWords":"我是一个基于GPT-3模型的人工智能助手","requestId":"stream-1750748989388","responseLength":75,"type":"stream-complete"}}

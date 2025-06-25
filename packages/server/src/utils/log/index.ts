@@ -2,7 +2,7 @@ import winston from 'winston';
 import path from 'node:path';
 
 // console.log('日志路径', process.env.PWD);
-const LOGS_DIR = path.join(process.env.PWD || '', 'logs/ai-agent');
+const LOGS_DIR = path.join(process.env.PWD || '', 'logs');
 
 export const logger = winston.createLogger({
   level: 'info',
@@ -18,6 +18,16 @@ export const logger = winston.createLogger({
       filename: 'info.log',
       dirname: LOGS_DIR,
       level: 'info',
+    }),
+    new winston.transports.Console({
+      level: 'debug',
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.timestamp(),
+        winston.format.printf(({ timestamp, level, message }) => {
+          return `${timestamp} ${level}: ${message}`;
+        })
+      ),
     }),
   ],
 });
