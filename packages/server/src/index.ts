@@ -1,17 +1,18 @@
 // apps/server/src/index.ts
 import express, { Request, Response, NextFunction } from 'express';
+import honoApp from './app';
+import { serve } from '@hono/node-server';
 import cors from 'cors';
 import OpenAI from 'openai';
 import { custom, z } from 'zod';
 import { createOpenAI } from '@ai-sdk/openai';
+// import { pipeDataStreamToResponse } from '@ai-sdk/node';
 import { streamText, generateObject, generateText } from 'ai';
 import dotenv from 'dotenv';
 import { logger } from './utils/log';
 import path from 'path';
 
 dotenv.config();
-
-// console.log('环境变量', process.env.OPENAI_API_KEY, process.env.NODE_ENV);
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -143,45 +144,76 @@ app.post('/api/agent/chat', async (req: Request, res: Response) => {
 app.post('/api/agent/stream', async (req: Request, res: Response) => {
   const requestId = `stream-${Date.now()}`;
   try {
-    const { message } = req.body;
-    if (!message) {
-      return res.status(400).json({ error: '消息内容不能为空' });
-    }
-
     // 设置响应头
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
-    /** openai 需要手动处理流式输出 */
-    // const stream = await openai.chat.completions.create({
-    //   model: 'gpt-4o-mini',
-    //   messages: [{ role: 'user', content: message }],
-    //   stream: true,
+
+    // const result = streamText({
+    //   model: openaiSdk('gpt-4o-mini'),
+    //   messages: req.body.messages,
+    // 下面这种流式响应与 useChat 兼容性最好
+    // onChunk: (chunk) => {
+    //   console.log('chunk: ', chunk);
+    //   res.write(
+    //     `data: ${JSON.stringify({ content: chunk.chunk.textDelta })}\n\n`
+    //   );
+    // },
+    // onFinish: () => {
+    //   res.write('data: [DONE]\n\n');
+    //   res.end();
+    // },
     // });
-    // let fullResponse = '';
-    // for await (const chunk of stream) {
-    //   const content = chunk.choices[0]?.delta?.content || '';
-    //   console.log('大模型输出: ', content);
-    //   if (content) {
-    //     fullResponse += content;
-    //     // 发送数据
-    //     res.write(`data: ${JSON.stringify({ content })}\n\n`);
+    // return pipeDataStreamToResponse(result.toDataStream(), res); // node.js 适配器输出
+    // express 基于 nodejs 原始http模块（req、res对象），而 hono 支持 web standards（Request、Response）
+    // ai-sdk 返回的是标准 web api 的 Response 对象，需要适配
+    // const webResponse = result.toDataStreamResponse();
+    // if (webResponse.body) {
+    //   const reader = webResponse.body.getReader();
+    //   try {
+    //     while (true) {
+    //       const { done, value } = await reader.read();
+    //       if (done) break;
+    //       res.write(value);
+    //     }
+    //     res.end();
+    //   } catch (error) {
+    //     res.end();
     //   }
+    // } else {
+    //   res.end();
     // }
 
-    // logger.info({
-    //   type: 'stream-complete',
-    //   requestId,
-    //   responseLength: fullResponse.length,
-    //   firstWords: fullResponse.substring(0, 20),
-    // });
+    // /** openai 需要手动处理流式输出 */
+    // // const stream = await openai.chat.completions.create({
+    // //   model: 'gpt-4o-mini',
+    // //   messages: [{ role: 'user', content: message }],
+    // //   stream: true,
+    // // });
+    // // let fullResponse = '';
+    // // for await (const chunk of stream) {
+    // //   const content = chunk.choices[0]?.delta?.content || '';
+    // //   console.log('大模型输出: ', content);
+    // //   if (content) {
+    // //     fullResponse += content;
+    // //     // 发送数据
+    // //     res.write(`data: ${JSON.stringify({ content })}\n\n`);
+    // //   }
+    // // }
 
-    // 结束流
+    // // logger.info({
+    // //   type: 'stream-complete',
+    // //   requestId,
+    // //   responseLength: fullResponse.length,
+    // //   firstWords: fullResponse.substring(0, 20),
+    // // });
 
-    /** 使用 ai-sdk 自动流式 */
+    // // 结束流
+
+    /** 使用 ai-sdk 自动流式，好像不兼容 useChat */
     const result = streamText({
       model: openaiSdk('gpt-4o-mini'),
-      messages: [{ role: 'user', content: message }],
+      messages: [{ role: 'user', content: req.body.message }],
     });
     for await (const textPart of result.textStream) {
       res.write(`data: ${JSON.stringify({ content: textPart })}\n\n`);
@@ -244,5 +276,20 @@ app.listen(port, () => {
   //   port,
   //   environment: process.env.NODE_ENV || 'development',
   // });
-  console.log(`✅[后端服务]: is running at http://localhost:${port}`);
+  console.log(`✅[express后端服务]: is running at http://localhost:${port}`);
 });
+
+/**
+ * 启动 hono 后端服务
+ */
+serve(
+  {
+    fetch: honoApp.fetch,
+    port: process.env.HONO_PORT ? Number(process.env.HONO_PORT) : 8080,
+  },
+  (info) => {
+    console.log(
+      `✅[hono 后端服务]: is running at http://localhost:${info.port}`
+    );
+  }
+);

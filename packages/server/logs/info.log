@@ -42,3 +42,15 @@
 {"app":"ai-agent","environment":"development","level":"info","message":"服务器启动成功，运行在 http://localhost:8000","port":"8000","type":"server-start"}
 {"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"测试控制台日志打印","time":"2025/6/23 19:41:15","timestamp":"1750678875389","type":"test-request"}
 {"app":"ai-agent","level":"info","message":{"firstWords":"我是一个基于GPT-3模型的人工智能助手","requestId":"stream-1750748989388","responseLength":75,"type":"stream-complete"}}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"你是谁","time":"2025/6/26 10:09:46","timestamp":"1750903786306","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"messages","time":"2025/6/26 10:58:10","timestamp":"1750906690571","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"ww","time":"2025/6/26 13:47:53","timestamp":"1750916873729","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"你是谁","time":"2025/6/26 13:51:17","timestamp":"1750917077589","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"你是谁","time":"2025/6/26 13:53:11","timestamp":"1750917191212","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"2","time":"2025/6/26 13:59:35","timestamp":"1750917575259","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"1+1","time":"2025/6/26 14:02:05","timestamp":"1750917725948","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"1","time":"2025/6/26 14:03:51","timestamp":"1750917831078","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"1","time":"2025/6/26 14:08:53","timestamp":"1750918133424","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"q","time":"2025/6/26 14:09:12","timestamp":"1750918152348","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"2","time":"2025/6/26 14:10:15","timestamp":"1750918215887","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"1","time":"2025/6/26 14:14:52","timestamp":"1750918492651","type":"test-request"}

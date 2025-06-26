@@ -33,7 +33,10 @@ function Chat() {
       setMessages((prev) => [...prev, aiMessage]); // AI 回复
     } catch (error) {
       console.error('Error fetching AI reply:', error);
-      const errorMessage = { role: 'assistant', content: '抱歉，我暂时无法回答。' };
+      const errorMessage = {
+        role: 'assistant',
+        content: '抱歉，我暂时无法回答。',
+      };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);

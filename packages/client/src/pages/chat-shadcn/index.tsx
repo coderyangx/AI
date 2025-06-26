@@ -2,14 +2,15 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { Bot, Sun, Moon, SunMoon, Zap } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import SplitText from '@/components/SplitText';
-import { MessageBubble } from './message-bubble';
-import { ChatInput } from './chat-input';
-import { Button } from './button';
-import { Switch } from './switch';
-import { Label } from './label';
+import { MessageBubble } from './MessageBubble';
+import { ChatInput } from './ChatInput';
+import { Button } from '../../components/shadcn/Button';
+import { Switch } from '../../components/shadcn/Switch';
+import { Label } from '../../components/shadcn/Label';
+import * as MessageBubbleGemini from '@/pages/chat-gemini/MessageBuble';
 import { useTheme } from '@/utils/theme';
 import { getCookie } from '@/config';
-import { ContentCard } from './content-card';
+import { ContentCard } from '../../components/shadcn/ContentCard';
 
 interface Message {
   id: string;
@@ -180,7 +181,7 @@ export default function ChatContainer() {
 
       while (true) {
         const { done, value } = await reader.read();
-        console.log('流式数据:', value);
+        // console.log('流式数据:', value);
         if (done) break;
         // 解码
         const chunk = decoder.decode(value, { stream: true });
@@ -246,6 +247,16 @@ export default function ChatContainer() {
     }
   };
 
+  const copyMessage = async (content: string) => {
+    try {
+      console.log('复制:', content);
+      await navigator.clipboard.writeText(content);
+      // 这里可以添加toast提示
+    } catch (err) {
+      console.error('复制失败:', err);
+    }
+  };
+
   return (
     <div className='flex flex-col h-[calc(100vh-2rem)] max-w-4xl mx-auto bg-card rounded-lg shadow-lg overflow-hidden border'>
       <div className='flex items-center justify-between px-6 py-4 border-b bg-card'>
@@ -265,6 +276,11 @@ export default function ChatContainer() {
             textAlign='center'
             onLetterAnimationComplete={() => {}}
           />
+          <div className='h-2 w-2 bg-green-500 rounded-full animate-pulse' />
+          {/* 状态指示 */}
+          <div className='text-sm text-gray-500'>
+            {isLoading && '正在输入中...'}
+          </div>
           {/* <h2 className='text-lg font-semibold flex'>AI 助手</h2> */}
           {/* <Button variant='destructive'>测试shadcn</Button>
           <Button variant='outline'>测试shadcn</Button>
@@ -306,8 +322,50 @@ export default function ChatContainer() {
       </div>
 
       <ScrollArea className='flex-1 px-4' ref={scrollAreaRef}>
-        <ContentCard />
-        <div className='space-y-4 py-4'>
+        {/* <ContentCard /> */}
+        <div className='space-y-6'>
+          {messages.length === 0 ? (
+            // 欢迎界面
+            <div className='text-center py-12'>
+              <Bot className='h-12 w-12 text-blue-500 mx-auto mb-4' />
+              <h2 className='text-xl font-semibold text-foreground mb-2'>
+                欢迎使用 AI 助手
+              </h2>
+              <p className='text-muted-foreground'>
+                我可以帮助你解答问题、创作内容、编程协助等。请开始对话吧！
+              </p>
+            </div>
+          ) : (
+            messages.map((message) => (
+              <MessageBubble
+                key={message.id}
+                content={message.content}
+                role={message.role}
+                timestamp={message.timestamp}
+                id={message.id}
+                onCopy={copyMessage}
+                onLike={(id) => console.log('点赞:', id)}
+                onDislike={(id) => console.log('踩:', id)}
+              />
+              // <MessageBubble
+              //   key={message.id}
+              //   content={message.content}
+              //   role={message.role}
+              //   timestamp={message.timestamp}
+              // />
+            ))
+          )}
+          {isLoading && !isStreamMode && (
+            <MessageBubble content='' role='assistant' isLoading={true} />
+          )}
+          {/* 错误提示 */}
+          {/* {error && (
+            <div className='bg-red-50 border border-red-200 rounded-lg p-3'>
+              <p className='text-red-600 text-sm'>发生错误: {error.message}</p>
+            </div>
+          )} */}
+        </div>
+        {/* <div className='space-y-4 py-4'>
           {messages.map((message) => (
             <MessageBubble
               key={message.id}
@@ -319,9 +377,8 @@ export default function ChatContainer() {
           {isLoading && !isStreamMode && (
             <MessageBubble content='' role='assistant' isLoading={true} />
           )}
-          {/* 用于滚动到底部的空元素 */}
           <div ref={messagesEndRef} />
-        </div>
+        </div> */}
       </ScrollArea>
 
       <div className='p-4 border-t bg-card'>
