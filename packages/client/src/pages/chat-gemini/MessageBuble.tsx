@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Message } from '@ai-sdk/react';
 import { cn } from '@/utils/cn';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Bot, User, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';

@@ -8,12 +8,12 @@ import { Button } from '@/components/ui/button';
 import ChatInput from './ChatInput';
 import MessageBubble from './MessageBuble';
 
-interface Message {
-  id: string;
-  role: 'user' | 'assistant' | 'system' | 'tool';
-  content: string;
-  createdAt?: Date;
-}
+// interface Message {
+//   id: string;
+//   role: 'user' | 'assistant' | 'system' | 'tool';
+//   content: string;
+//   createdAt?: Date;
+// }
 
 export default function ChatGemini() {
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } =

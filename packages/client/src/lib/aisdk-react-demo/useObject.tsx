@@ -2,7 +2,7 @@
  * 2. useObject - 结构化数据生成
  */
 
-import { useObject } from '@ai-sdk/react';
+import { experimental_useObject } from '@ai-sdk/react';
 import { z } from 'zod';
 
 // 定义数据结构
@@ -20,8 +20,8 @@ const ObjectComponent = () => {
     submit, // 触发生成
     isLoading,
     error,
-  } = useObject({
-    api: 'http://localhost:8080/api/generate-object',
+  } = experimental_useObject({
+    api: 'http://localhost:8000/api/agent/test',
     schema: recipeSchema,
   });
 

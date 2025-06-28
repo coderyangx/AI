@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MessageBubble } from './MessageBubble';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { ScrollArea } from '../ui/scroll-area';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Input } from '@/components/shadcn/Input';
+import { Button } from '@/components/shadcn/Button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/Avatar';
 import { SendHorizontal, Bot, User } from 'lucide-react';
 
 interface Message {
@@ -140,7 +140,7 @@ export default function ChatContainer() {
             onChange={(e) => setInput(e.target.value)}
             placeholder='输入你的问题...'
             disabled={isLoading}
-            wrapperClassName='flex-1'
+            // wrapperClassName='flex-1'
             // className='flex-1'
           />
           <Button type='submit' disabled={isLoading || !input.trim()}>

@@ -101,7 +101,7 @@ export default function ChatContainer() {
         headers: {
           'Content-Type': 'application/json',
           'X-Time': new Date().toLocaleString(),
-          'X-Timestamp': new Date().getTime(),
+          'X-Timestamp': new Date().getTime().toString(),
           Cookie: cookie,
         },
         body: JSON.stringify({ message: content }),

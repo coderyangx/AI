@@ -3,7 +3,7 @@
  * 5. 组合使用多个 hooks
  */
 
-import { useChat, useCompletion, useObject } from '@ai-sdk/react';
+import { useChat, useCompletion, experimental_useObject } from '@ai-sdk/react';
 import { useState } from 'react';
 import { z } from 'zod';
 
@@ -21,7 +21,7 @@ const MultiHookComponent = () => {
   });
 
   // 结构化生成模式
-  const objectGen = useObject({
+  const objectGen = experimental_useObject({
     api: 'http://localhost:8080/api/object',
     schema: z.object({
       summary: z.string(),

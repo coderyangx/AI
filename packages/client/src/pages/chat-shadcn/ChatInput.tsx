@@ -2,9 +2,9 @@ import React from 'react';
 import { Loader2, SendHorizontal } from 'lucide-react';
 // import { Input } from '@/components/ui/input';
 // import { Button } from '@/components/ui/button';
-import { Input } from '../../components/shadcn/Input';
-import { Button } from '../../components/shadcn/Button';
-import { Textarea } from '../../components/shadcn/Textarea';
+import { Input } from '@/components/shadcn/Input';
+import { Button } from '@/components/shadcn/Button';
+import { Textarea } from '@/components/shadcn/Textarea';
 
 interface ChatInputProps {
   value: string;
