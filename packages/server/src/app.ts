@@ -2,6 +2,8 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { stream as honoStream } from 'hono/streaming';
+import { z } from 'zod';
+// import { zValidator } from '@hono/zod-validator';
 import { streamText } from 'ai';
 import { createOpenAI } from '@ai-sdk/openai';
 import dotenv from 'dotenv';
@@ -70,6 +72,25 @@ app.post('/api/agent/test', async (c) => {
     content: `I am a Hono AI agent. You said: '${userContent}'`,
   });
 });
+
+// const userSchema = z.object({
+//   name: z.string().min(1),
+//   age: z.number(),
+// });
+// app.post(
+//   '/api/agent/zod-validator',
+//   zValidator('json', userSchema, (res, c) => {
+//     if (!res.success) {
+//       return c.text('Invalid!', 400);
+//     }
+//   }),
+//   async (c) => {
+//     const { name, age } = c.req.valid('json');
+//     return c.json({
+//       message: 'Hello World',
+//     });
+//   }
+// );
 
 export default app;
 

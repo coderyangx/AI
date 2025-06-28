@@ -4,13 +4,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import SplitText from '@/components/SplitText';
 import { MessageBubble } from './MessageBubble';
 import { ChatInput } from './ChatInput';
-import { Button } from '../../components/shadcn/Button';
-import { Switch } from '../../components/shadcn/Switch';
-import { Label } from '../../components/shadcn/Label';
+import { Button } from '@/components/shadcn/Button';
+import { Switch } from '@/components/shadcn/Switch';
+import { Label } from '@/components/shadcn/Label';
 import * as MessageBubbleGemini from '@/pages/chat-gemini/MessageBuble';
 import { useTheme } from '@/utils/theme';
 import { getCookie } from '@/config';
-import { ContentCard } from '../../components/shadcn/ContentCard';
+import { ContentCard } from '@/components/shadcn/ContentCard';
 
 interface Message {
   id: string;
