@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Bot, Sun, Moon, SunMoon, Zap } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea } from '@/components/ui/ScrollArea';
 import SplitText from '@/components/SplitText';
 import { MessageBubble } from './MessageBubble';
 import { ChatInput } from './ChatInput';

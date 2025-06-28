@@ -11,7 +11,7 @@
   "author": "coderyangx <993794142@qq.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "turbo run dev --filter=!xueqian-ai-agent",
+    "dev": "turbo run dev --filter=!xueqian-agent",
     "dev:client": "cd packages/client && yarn dev",
     "dev:server": "cd packages/server && yarn dev",
     "build": "turbo run build",

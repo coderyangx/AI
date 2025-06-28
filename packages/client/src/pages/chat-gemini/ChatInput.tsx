@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@/utils/cn';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/shadcn/Button';
 import { Textarea } from '@/components/shadcn/Textarea';
 import { Send, Square, Loader2 } from 'lucide-react';
 

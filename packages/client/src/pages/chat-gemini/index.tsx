@@ -1,10 +1,10 @@
 import React from 'react';
 import { useChat } from '@ai-sdk/react';
 import { cn } from '@/utils/cn';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { ScrollArea } from '@/components/ui/ScrollArea';
+import { Avatar, AvatarFallback } from '@/components/ui/Avatar';
 import { Bot, User, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import ChatInput from './ChatInput';
 import MessageBubble from './MessageBuble';
 
