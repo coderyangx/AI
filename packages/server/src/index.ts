@@ -33,6 +33,7 @@ const openai = new OpenAI({
 app.use(
   cors({
     origin: [
+      'http://localhost:4173', // 为 Vite 预览 添加
       'http://localhost:3000', // 保留，以防万一
       'http://localhost:5173', // <-- 为 Vite 添加
       'http://localhost:8000', // <-- 为 Vite 添加
@@ -72,6 +73,22 @@ app.use(express.json()); // 解析请求体中的json数据
 //   };
 //   next();
 // });
+
+const clientDistPath = path.join(__dirname, '../../client/dist');
+console.log('客户端文件路径:', clientDistPath);
+
+// 静态文件（放在 API 路由之前）
+app.use(
+  express.static(clientDistPath, {
+    index: 'index.html',
+    setHeaders: (res, filePath) => {
+      // 为 HTML 文件设置缓存控制
+      if (filePath.endsWith('.html')) {
+        res.setHeader('Cache-Control', 'no-cache');
+      }
+    },
+  })
+);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello From AI Agent Backend (Node.js)');

@@ -54,3 +54,5 @@
 {"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"q","time":"2025/6/26 14:09:12","timestamp":"1750918152348","type":"test-request"}
 {"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"2","time":"2025/6/26 14:10:15","timestamp":"1750918215887","type":"test-request"}
 {"app":"ai-agent","custom":{"origin":"http://localhost:5173"},"level":"info","message":"1","time":"2025/6/26 14:14:52","timestamp":"1750918492651","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:4173"},"level":"info","message":"你是谁","time":"2025/6/29 16:02:38","timestamp":"1751184158684","type":"test-request"}
+{"app":"ai-agent","custom":{"origin":"http://localhost:8000"},"level":"info","message":"你是谁","time":"2025/6/29 16:16:25","timestamp":"1751184985815","type":"test-request"}

@@ -15,7 +15,8 @@
     "dev:client": "cd packages/client && yarn dev",
     "dev:server": "cd packages/server && yarn dev",
     "build": "turbo run build",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "build:dev": "turbo run build --filter=client && yarn dev:server"
   },
   "devDependencies": {
     "turbo": "^2.5.4"
