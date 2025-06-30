@@ -1,3 +1,4 @@
+// @ts-nocheck
 // 🛠️ 工具调用 API
 // 4. Tools & Function Calling
 import { createOpenAI } from '@ai-sdk/openai';

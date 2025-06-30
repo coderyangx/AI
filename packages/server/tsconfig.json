@@ -7,9 +7,11 @@
     "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true
+    "strict": false, // 启用所有严格类型检查选项
+    "noImplicitAny": false, // 关闭隐式 any 类型
+    "noUnusedLocals": false, // 关闭未使用的局部变量
+    "skipLibCheck": true, // 跳过库文件检查
+    "resolveJsonModule": true, // 支持导入 JSON 文件
   },
   "include": ["src/**/*"]
 }

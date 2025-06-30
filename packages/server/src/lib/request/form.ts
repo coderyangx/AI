@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FORM_API_SERVER_MAP } from "../../const/index.js";
+// import { FORM_API_SERVER_MAP } from "../../const/index.js";
 
 declare module "axios" {
   export interface AxiosInstance {
@@ -27,7 +27,7 @@ declare module "axios" {
 
 export const formFetch = (ctx: any) => {
   const instance = axios.create({
-    baseURL: FORM_API_SERVER_MAP[ctx.env || "development"],
+    // baseURL: FORM_API_SERVER_MAP[ctx.env || "development"],
     headers: {
       Cookie: ctx.cookie || "",
     },

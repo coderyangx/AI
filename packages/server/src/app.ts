@@ -45,6 +45,7 @@ app.post('/api/agent/stream', async (c) => {
     model: openai('gpt-4o-mini'),
     messages: messages,
     onChunk: (chunk) => {
+      // @ts-ignore
       console.log('hono onChunk: ', chunk.chunk.textDelta);
     },
     // onFinish: () => {

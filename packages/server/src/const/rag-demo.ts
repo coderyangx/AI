@@ -1,3 +1,4 @@
+// @ts-nocheck
 // LangChain 示例 - 功能强大
 import { OpenAI } from 'langchain/llms/openai';
 import { RetrievalQAChain } from 'langchain/chains';

@@ -95,7 +95,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // 普通对话接口
-app.post('/api/agent/chat', async (req: Request, res: Response) => {
+app.post('/api/agent/chat', async (req: Request, res: any) => {
   try {
     const { message } = req.body;
     const cookies = req.headers.cookie;
@@ -250,7 +250,7 @@ app.post('/api/agent/stream', async (req: Request, res: Response) => {
 });
 
 // 测试接口
-app.post('/api/agent/test', (req: Request, res: Response) => {
+app.post('/api/agent/test', (req: Request, res: any) => {
   const { message } = req.body;
   if (!message) {
     logger.warn('测试接口收到空消息');

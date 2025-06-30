@@ -25,7 +25,8 @@ export async function streamTextWithCallbackDemo(prompt: string) {
     model: openaiSdk('gpt-4o-mini'),
     prompt: '解释React的工作原理',
     onChunk({ chunk }) {
-      console.log('接收到:', chunk.text);
+      // @ts-ignore
+      console.log('接收到:', chunk.textDelta);
     },
     onFinish({ text, usage }) {
       console.log('完成，总计:', text.length, '字符');

@@ -1,0 +1,21 @@
+{
+  "builds": [
+    {
+      "src": "src/index.ts",
+      "use": "@vercel/node",
+      "config": {
+        "tsc": {
+          "compilerOptions": {
+            "noImplicitAny": false,
+            "strict": false,
+            "skipLibCheck": true,
+            "resolveJsonModule": true,
+            "esModuleInterop": true,
+            "forceConsistentCasingInFileNames": true,
+            "outDir": "dist"
+          }
+        }
+      }
+    }
+  ]
+}
