@@ -15,6 +15,8 @@
     "dev:client": "cd packages/client && yarn dev",
     "dev:server": "cd packages/server && yarn dev",
     "build": "turbo run build",
+    "build:client": "cd packages/client && yarn build",
+    "build:server": "cd packages/server && yarn build",
     "lint": "turbo run lint",
     "build:dev": "turbo run build --filter=client && yarn dev:server"
   },
