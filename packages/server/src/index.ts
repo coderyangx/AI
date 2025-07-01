@@ -1,7 +1,7 @@
 // apps/server/src/index.ts
 import express, { Request, Response, NextFunction } from 'express';
 import honoApp from './app';
-import { serve } from '@hono/node-server';
+// import { serve } from '@hono/node-server';
 import cors from 'cors';
 import OpenAI from 'openai';
 import { custom, z } from 'zod';
@@ -33,6 +33,7 @@ const openai = new OpenAI({
 app.use(
   cors({
     origin: [
+      'https://aicoder.dpdns.org', // client 域名
       'http://localhost:4173', // 为 Vite 预览 添加
       'http://localhost:3000', // 保留，以防万一
       'http://localhost:5173', // <-- 为 Vite 添加
@@ -74,7 +75,7 @@ app.use(express.json()); // 解析请求体中的json数据
 //   next();
 // });
 
-const clientDistPath = path.join(__dirname, '../../client/dist');
+const clientDistPath = path.join(__dirname, '../../../packages/client/dist');
 console.log('客户端文件路径:', clientDistPath);
 
 // 静态文件（放在 API 路由之前）
@@ -299,14 +300,14 @@ app.listen(port, () => {
 /**
  * 启动 hono 后端服务
  */
-serve(
-  {
-    fetch: honoApp.fetch,
-    port: process.env.HONO_PORT ? Number(process.env.HONO_PORT) : 8080,
-  },
-  (info) => {
-    console.log(
-      `✅[hono 后端服务]: is running at http://localhost:${info.port}`
-    );
-  }
-);
+// serve(
+//   {
+//     fetch: honoApp.fetch,
+//     port: process.env.HONO_PORT ? Number(process.env.HONO_PORT) : 8080,
+//   },
+//   (info) => {
+//     console.log(
+//       `✅[hono 后端服务]: is running at http://localhost:${info.port}`
+//     );
+//   }
+// );

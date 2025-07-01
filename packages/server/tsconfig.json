@@ -12,6 +12,7 @@
     "noUnusedLocals": false, // 关闭未使用的局部变量
     "skipLibCheck": true, // 跳过库文件检查
     "resolveJsonModule": true, // 支持导入 JSON 文件
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "types/**/*"] // 包含类型文件
 }

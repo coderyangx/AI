@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@/utils/cn';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export interface MessageBubbleProps {
@@ -22,12 +22,22 @@ const LoadingDots = () => {
       <motion.span
         className='w-1.5 h-1.5 bg-gray-600 dark:bg-gray-300 rounded-full'
         animate={{ scale: [0.8, 1.2, 0.8] }}
-        transition={{ duration: 0.9, delay: 0.3, repeat: Infinity, repeatDelay: 0 }}
+        transition={{
+          duration: 0.9,
+          delay: 0.3,
+          repeat: Infinity,
+          repeatDelay: 0,
+        }}
       />
       <motion.span
         className='w-1.5 h-1.5 bg-gray-600 dark:bg-gray-300 rounded-full'
         animate={{ scale: [0.8, 1.2, 0.8] }}
-        transition={{ duration: 0.9, delay: 0.6, repeat: Infinity, repeatDelay: 0 }}
+        transition={{
+          duration: 0.9,
+          delay: 0.6,
+          repeat: Infinity,
+          repeatDelay: 0,
+        }}
       />
     </div>
   );
@@ -78,7 +88,9 @@ export function MessageBubble({
       exit='exit'
     >
       {!isUser && avatar && (
-        <div className='flex-shrink-0 rounded-full overflow-hidden w-8 h-8'>{avatar}</div>
+        <div className='flex-shrink-0 rounded-full overflow-hidden w-8 h-8'>
+          {avatar}
+        </div>
       )}
 
       <div
@@ -93,13 +105,19 @@ export function MessageBubble({
         ) : (
           <>
             <div className='whitespace-pre-wrap break-words'>{content}</div>
-            {timestamp && <div className='text-xs text-gray-500 mt-1 text-right'>{timestamp}</div>}
+            {timestamp && (
+              <div className='text-xs text-gray-500 mt-1 text-right'>
+                {timestamp}
+              </div>
+            )}
           </>
         )}
       </div>
 
       {isUser && avatar && (
-        <div className='flex-shrink-0 rounded-full overflow-hidden w-8 h-8'>{avatar}</div>
+        <div className='flex-shrink-0 rounded-full overflow-hidden w-8 h-8'>
+          {avatar}
+        </div>
       )}
     </motion.div>
   );

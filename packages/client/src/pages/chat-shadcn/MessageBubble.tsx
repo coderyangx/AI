@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
-import React from 'react';
 import { cn } from '@/utils/cn';
 
 interface MessageBubbleProps {

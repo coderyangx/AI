@@ -14,7 +14,7 @@
     "dev": "turbo run dev --filter=!xueqian-agent",
     "dev:client": "cd packages/client && yarn dev",
     "dev:server": "cd packages/server && yarn dev",
-    "build": "turbo run build",
+    "build": "turbo run build --filter=!xueqian-agent",
     "build:client": "cd packages/client && yarn build",
     "build:server": "cd packages/server && yarn build",
     "lint": "turbo run lint",
