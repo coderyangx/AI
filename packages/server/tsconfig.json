@@ -14,5 +14,6 @@
     "resolveJsonModule": true, // 支持导入 JSON 文件
     "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["src/**/*", "types/**/*"] // 包含类型文件
+  "include": ["src/**/*", "types/**/*"], // 包含类型文件
+  "exclude": ["node_modules", "dist", "src/tools/**/*", "src/lib/**/*"]
 }

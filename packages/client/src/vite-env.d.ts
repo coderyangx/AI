@@ -42,9 +42,9 @@ declare module '@/components/ui/Avatar' {
     className?: string;
   }
 
-  export const Avatar: React.FC<AvatarProps>;
-  export const AvatarImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement>>;
-  export const AvatarFallback: React.FC<React.HTMLAttributes<HTMLDivElement>>;
+  // export const Avatar: React.FC<AvatarProps>;
+  // export const AvatarImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement>>;
+  // export const AvatarFallback: React.FC<React.HTMLAttributes<HTMLDivElement>>;
 }
 
 // shadcn组件类型声明
@@ -108,7 +108,7 @@ declare module '@/components/shadcn/Avatar' {
     className?: string;
   }
 
-  export const Avatar: React.FC<AvatarProps>;
-  export const AvatarImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement>>;
-  export const AvatarFallback: React.FC<React.HTMLAttributes<HTMLDivElement>>;
+  // export const Avatar: React.FC<AvatarProps>;
+  // export const AvatarImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement>>;
+  // export const AvatarFallback: React.FC<React.HTMLAttributes<HTMLDivElement>>;
 }
