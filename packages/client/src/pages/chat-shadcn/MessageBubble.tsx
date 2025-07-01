@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 import { Bot, User, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -342,7 +342,7 @@ export function MessageBubble(props: MessageBubbleProps) {
 // old ui
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 // import { Bot, User } from 'lucide-react';
-// import { AnimatePresence, motion } from 'framer-motion';
+// import { AnimatePresence, motion } from 'motion/react';
 // import ReactMarkdown from 'react-markdown';
 // import remarkGfm from 'remark-gfm';
 // import rehypeRaw from 'rehype-raw';

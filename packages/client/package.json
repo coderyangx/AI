@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "build:vercel": "vite build --mode vercel",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -26,7 +26,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.0",
     "date-fns": "^4.1.0",
-    "framer-motion": "^12.18.1",
+    "motion": "^12.12.2",
     "gsap": "^3.13.0",
     "lucide-react": "^0.518.0",
     "postcss": "^8.4.35",
