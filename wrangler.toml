@@ -1,0 +1,12 @@
+name = "aicoder"
+compatibility_date = "2023-06-01"
+
+[build]
+command = "yarn install && yarn build"
+output_dir = "packages/server/dist"
+
+[site]
+bucket = "packages/server/dist"
+
+[env.production]
+node_compat = true

@@ -1,7 +1,8 @@
 import React from 'react';
-import { cn } from '../../utils/cn';
+import { cn } from '@/utils/cn';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   leftIcon?: React.ReactNode;
@@ -9,12 +10,26 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   wrapperClassName?: string;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, leftIcon, rightIcon, wrapperClassName, ...props }, ref) => {
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      className,
+      label,
+      error,
+      leftIcon,
+      rightIcon,
+      wrapperClassName,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <div className={cn('flex flex-col space-y-1.5', wrapperClassName)}>
         {label && (
-          <label htmlFor={props.id} className='text-sm font-medium text-gray-700'>
+          <label
+            htmlFor={props.id}
+            className='text-sm font-medium text-gray-700'
+          >
             {label}
           </label>
         )}
@@ -51,3 +66,5 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 );
 
 Input.displayName = 'Input';
+
+export default Input;

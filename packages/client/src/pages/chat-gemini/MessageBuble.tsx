@@ -1,9 +1,8 @@
 import React from 'react';
 import type { Message } from '@ai-sdk/react';
 import { cn } from '@/utils/cn';
-import { Avatar, AvatarFallback } from '@/components/ui/Avatar';
 import { Bot, User, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import { Button, Avatar, AvatarFallback } from '@/components/shadcn';
 
 // 消息气泡组件
 export default function MessageBubble({

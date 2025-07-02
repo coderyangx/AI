@@ -15,12 +15,13 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@/components': path.resolve(__dirname, './src/components'),
-      '@/lib': path.resolve(__dirname, './src/lib'),
-      '@/utils': path.resolve(__dirname, './src/utils'),
-      '@/pages': path.resolve(__dirname, './src/pages'),
+      '@': '/src',
+      // '@/components': path.resolve(__dirname, './src/components'),
+      // '@/lib': path.resolve(__dirname, './src/lib'),
+      // '@/utils': path.resolve(__dirname, './src/utils'),
+      // '@/pages': path.resolve(__dirname, './src/pages'),
     },
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
   },
   // 为 Vercel 部署优化
   build: {

@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SendHorizontal, Bot, User } from 'lucide-react';
 import { MessageBubble } from './MessageBubble';
-import { Input } from '@/components/shadcn/Input';
-import { Button } from '@/components/shadcn/Button';
 import {
+  Input,
+  Button,
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from '@/components/shadcn/Avatar';
+} from '@/components/shadcn';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 
 interface Message {

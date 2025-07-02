@@ -3,8 +3,7 @@
  * 最佳实践组合：Vercel AI SDK 处理前端交互，LangChain 处理复杂 RAG 和 Agent 逻辑
  */
 import { useChat } from '@ai-sdk/react';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
+import { Input, Button } from '@/components/shadcn';
 
 const ChatComponent = () => {
   const {

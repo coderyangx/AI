@@ -92,7 +92,7 @@ app.use(
 );
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello From AI Agent Backend (Node.js)');
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
 // 普通对话接口
@@ -270,6 +270,10 @@ app.post('/api/agent/test', (req: Request, res: any) => {
   // const agentResponse = await myAgent.run(prompt);
   const responseText = `I am a Node.js AI agent. You said: '${message}'`;
   res.json({ response: responseText });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
 // 错误处理中间件

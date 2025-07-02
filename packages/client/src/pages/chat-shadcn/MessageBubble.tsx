@@ -1,8 +1,12 @@
 // new gemini-ui
 import { useState } from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 import { Bot, User, Copy, ThumbsUp, ThumbsDown } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import {
+  Button,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/shadcn';
 import { motion } from 'motion/react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';

@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { cn } from '@/utils/cn';
-import { Button } from '@/components/shadcn/Button';
-import { Textarea } from '@/components/shadcn/Textarea';
+import { Button, Textarea } from '@/components/shadcn';
 import { Send, Square, Loader2 } from 'lucide-react';
 
 interface ChatInputProps {
