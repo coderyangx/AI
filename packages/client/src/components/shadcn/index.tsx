@@ -1,9 +1,9 @@
-import { Button } from '@/components/shadcn/Button';
-import { Input } from '@/components/shadcn/Input';
-import { Switch } from '@/components/shadcn/Switch';
-import { Label } from '@/components/shadcn/Label';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/shadcn/Avatar';
-import { Textarea } from '@/components/shadcn/Textarea';
+import { Button } from './Button';
+import { Input } from './Input';
+import { Switch } from './Switch';
+import { Label } from './Label';
+import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
+import { Textarea } from './Textarea';
 
 export {
   Button,

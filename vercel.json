@@ -6,7 +6,8 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist",
-        "buildCommand": "yarn build:client"
+        "installCommand": "cd packages/client && yarn install --frozen-lockfile",
+        "buildCommand": "cd packages/client && node vercel-build.js"
       }
     },
     {
