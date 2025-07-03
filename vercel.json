@@ -1,43 +1,16 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "packages/client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist",
-        "installCommand": "cd packages/client && yarn install --frozen-lockfile",
-        "buildCommand": "cd packages/client && node vercel-build.js"
-      }
-    },
-    {
-      "src": "packages/server/src/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "installCommand": "cd packages/server && yarn --force",
-        "tsc": {
-          "compilerOptions": {
-            "noImplicitAny": false,
-            "strict": false,
-            "skipLibCheck": true,
-            "resolveJsonModule": true,
-            "esModuleInterop": true
-          }
-        }
-      }
-    }
-  ],
+  "buildCommand": "node bin/vercel-build.js",
+  "outputDirectory": "dist",
+  "installCommand": "yarn install",
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "packages/server/src/index.ts"
-    },
-    {
-      "handle": "filesystem"
+      "dest": "/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "packages/client/dist/$1"
+      "dest": "/index.js"
     }
   ]
 }

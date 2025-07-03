@@ -1,5 +1,5 @@
 {
-  "name": "my-ai-agent-monorepo-node",
+  "name": "ai-agent-monorepo",
   "version": "1.0.0",
   "private": true,
   "packageManager": "yarn@1.22.22",
@@ -14,11 +14,17 @@
     "dev": "turbo run dev --filter=!xueqian-agent",
     "dev:client": "cd packages/client && yarn dev",
     "dev:server": "cd packages/server && yarn dev",
-    "build": "turbo run build --filter=!xueqian-agent",
+    "build": "turbo run build --filter=!xueqian-agent --no-cache",
+    "build:vercel": "node ./bin/vercel-build.js",
+    "build:cloudflare": "turbo run build --filter=server",
+    "build:vercel1": "./bin/vercel-build.sh",
     "build:client": "cd packages/client && yarn build",
     "build:server": "cd packages/server && yarn build",
     "lint": "turbo run lint",
     "build:dev": "turbo run build --filter=client && yarn dev:server"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   },
   "devDependencies": {
     "turbo": "^2.5.4"

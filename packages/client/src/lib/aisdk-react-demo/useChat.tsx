@@ -59,7 +59,7 @@ const ChatComponent = () => {
           placeholder='Type a message...'
           value={input}
           onChange={handleInputChange}
-          wrapperClassName='flex-1'
+          className='flex-1'
         />
         <Button onClick={handleSubmit} className='bg-blue-500 text-white'>
           Send
@@ -117,7 +117,7 @@ const AgentComponent = () => {
           placeholder='Type a message...'
           value={input}
           onChange={handleInputChange}
-          wrapperClassName='flex-1'
+          className='flex-1'
         />
         <Button onClick={handleSubmit} className='bg-blue-500 text-white'>
           Send
