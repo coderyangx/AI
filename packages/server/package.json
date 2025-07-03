@@ -6,7 +6,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev:worker": "wrangler dev src/worker-adapter.ts",
     "build": "tsc --noEmit false --skipLibCheck true",
+    "build:worker": "tsc --noEmit false --skipLibCheck true && wrangler deploy",
+    "deploy": "wrangler deploy",
+    "deploy:worker": "wrangler deploy",
     "start": "node dist/index.js",
     "lint": "eslint . --ext .ts"
   },
@@ -27,6 +31,7 @@
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.3",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "wrangler": "^3.37.0"
   }
 }
